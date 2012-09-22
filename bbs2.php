@@ -69,19 +69,20 @@ var_dump($result);
    </div> 
     
     <div id="main"> Contribution</div>
-    <?php
+    
+    
+<?php
+//DBよりデータ取得
 $query = 'SELECT * FROM post ORDER BY posted_at DESC';
- foreach ($pdo->query($query) as $row) { //DBよりデータ取得
-  
+ foreach ($pdo->query($query) as $row):
 ?>
+
 <br>
 [<?php echo $row['id'];?>] <?php echo $row['title'];?> <?php echo $row['name'];?>
 <?php echo $row['posted_at'];?>
 <br>
 <?php echo $row['body'];?>
-<?php
-}
-?>
+<?php endforeach; ?>
     <br>
 
 </form>
