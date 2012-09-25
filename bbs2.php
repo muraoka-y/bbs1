@@ -27,8 +27,8 @@ try {
 var_dump($result);
 }
 //データ削除
-if($del_no !=""){//削除ナンバーの入力を確認したら
-  $sql ='delete FROM 'bbs' WHERE 'no' = '.$_POST['del_no'].'LIMIT 1';
+if($_POST['delete'] ){//削除ナンバーの入力を確認したら
+  $sql ="DELETE FROM post WHERE id = ".$_POST[$del_no]." 'LIMIT 1' ";
   //データベースの項目が$del_noと一致すると削除
   mysql_query($sql);
 }
@@ -66,7 +66,7 @@ if($del_no !=""){//削除ナンバーの入力を確認したら
    
   <div class="form">
     <label for="body">4-text:</label> 
-    <p><textarea id="body" name="body" cols="100" rows="10" >本文入力</textarea></p>
+    <p><textarea id="body" name="body" cols="100" rows="10" ></textarea></p>
   </div>
 
   <div class="form">
@@ -76,7 +76,8 @@ if($del_no !=""){//削除ナンバーの入力を確認したら
    </div> 
     
     <div id="main"> Contribution</div>
-    
+   削除No:<input type="text" name="del_no" size="5" > 削除したい投稿の番号を入力してください
+  <p><input type="submit" name="delete" value="delete" class=button >  </p>
     
 <?php
 //DBよりデータ取得
@@ -85,10 +86,10 @@ $query = 'SELECT * FROM post ORDER BY posted_at DESC';
 ?>
 
 <br>
-[<?$row['id'];?>] <?php echo $row['title'];?> <?php echo $row['name'];?>
-<?php echo $row['posted_at'];?>
+[<?=$row['id']?>] <?=$row['title']?> <?=$row['name']?>
+<?=$row['posted_at']?>
 <br>
-<?php echo $row['body'];?>
+<?=$row['body']?>
 <?php endforeach; ?>
     <br>
 
