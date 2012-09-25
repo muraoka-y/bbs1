@@ -8,7 +8,7 @@ try {
     throw $e;
 }
 if(!empty($_POST)){
-
+//新規データがからでなければデータ追加
 $query ='insert into post (name,address,title,body,posted_at)values (?, ?, ?, ?, ?)';
 
 $stmt =$pdo->prepare($query);
@@ -26,14 +26,21 @@ try {
 }
 var_dump($result);
 }
+//データ削除
+if($del_no !=""){//削除ナンバーの入力を確認したら
+  $sql ='delete FROM 'bbs' WHERE 'no' = '.$_POST['del_no'].'LIMIT 1';
+  //データベースの項目が$del_noと一致すると削除
+  mysql_query($sql);
+}
 ?>
-<!DOCTYPE html>
-<html>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN"
+"http://www.w3.org/TR/html4/frameset.dtd">
+<HTML lang="ja-JP">
 <head>
-  <title>
-    BBS
-  </title>
-<link rel="stylesheet" href="bbs.css">
+  <link rel="stylesheet" href="bbs.css">
+  <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <META HTTP-EQUIV="CONTENT-STYLE-TYPE" CONTENT="text/css">
+  <title>BBS</title>
 </head>
 <body>
   <h1>BBS</h1>
@@ -43,23 +50,23 @@ var_dump($result);
 <div id="header"> Write your information </div>
   <div class="form">
     <label for="name">1-Name:</label> 
-    <input type="text"  name="name"  id="name" size="50"  placeholder="例；aaaa"></p></div>
-    <span class="point"><p style="color:red; solid #f00">投稿者のお名前を記入してください</p></span>
+    <p><input type="text"  name="name"  id="name" size="50"  placeholder="例；aaaa"></p></div>
+    <p><style="color:red; solid #f00">投稿者のお名前を記入してください</p>
     
 
   <div class="form">
     <label for="address">2-Adress:</label> 
-    <input type="text"  name="address"  id="address" size="50"  placeholder="例；xxx.klab.com"></p>
+    <p><input type="text"  name="address"  id="address" size="50"  placeholder="例；xxx.klab.com"></p>
   </div>
   
   <div class="form">
     <label for="title">3-title:</label> 
-    <input type="text"  name="title"  id="title" size="50" ></p>
+    <p><input type="text"  name="title"  id="title" size="50" ></p>
   </div>
    
   <div class="form">
     <label for="body">4-text:</label> 
-    <textarea id="body" name="body" cols="100" rows="10" ></textarea></p>
+    <p><textarea id="body" name="body" cols="100" rows="10" >本文入力</textarea></p>
   </div>
 
   <div class="form">
@@ -78,7 +85,7 @@ $query = 'SELECT * FROM post ORDER BY posted_at DESC';
 ?>
 
 <br>
-[<?php echo $row['id'];?>] <?php echo $row['title'];?> <?php echo $row['name'];?>
+[<?$row['id'];?>] <?php echo $row['title'];?> <?php echo $row['name'];?>
 <?php echo $row['posted_at'];?>
 <br>
 <?php echo $row['body'];?>
