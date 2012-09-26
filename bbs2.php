@@ -7,7 +7,7 @@ try {
 } catch (Exception $e) {
     throw $e;
 }
-if(!empty($_POST)){
+if(!empty($_POST[Post])){
 //新規データがからでなければデータ追加
 $query ='insert into post (name,address,title,body,posted_at)values (?, ?, ?, ?, ?)';
 
@@ -27,10 +27,17 @@ try {
 var_dump($result);
 }
 //データ削除
+$del_no = $_POST['del_no'];
 if($_POST['delete'] ){//削除ナンバーの入力を確認したら
-  $sql ="DELETE FROM post WHERE id = ".$_POST[$del_no]." 'LIMIT 1' ";
+  $sql ="delete from post where id = ".$del_no."";
   //データベースの項目が$del_noと一致すると削除
-  mysql_query($sql);
+  echo "$sql";
+  $delete = mysql_query("delete from post where id = '49'");
+  var_dump($delete);
+  
+ // $select=mysql_query('SELECT name FROM post where id=49');
+  //$row =mysql_fetch_assoc($select);
+  //echo $row['name'];
 }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN"
@@ -77,7 +84,7 @@ if($_POST['delete'] ){//削除ナンバーの入力を確認したら
     
     <div id="main"> Contribution</div>
    削除No:<input type="text" name="del_no" size="5" > 削除したい投稿の番号を入力してください
-  <p><input type="submit" name="delete" value="delete" class=button >  </p>
+  <p><input type="submit" name="delete" value="delete" class=button ></p>
     
 <?php
 //DBよりデータ取得
@@ -91,7 +98,7 @@ $query = 'SELECT * FROM post ORDER BY posted_at DESC';
 <br>
 <?=$row['body']?>
 <?php endforeach; ?>
-    <br>
+<br>
 
 </form>
 </body>
