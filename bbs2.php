@@ -25,6 +25,17 @@ try {
     throw $e;
 }
 }
+//データ削除
+$del_no = $_POST['del_no'];
+if($_POST['delete'] ){//削除ナンバーの入力を確認したら
+  $sql ="delete from post where id = ".$del_no."";
+  //データベースの項目が$del_noと一致すると削除
+  $delete = mysql_query("delete from post where id = '49'");
+  
+ // $select=mysql_query('SELECT name FROM post where id=49');
+  //$row =mysql_fetch_assoc($select);
+  //echo $row['name'];
+}
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN"
 "http://www.w3.org/TR/html4/frameset.dtd">
