@@ -26,19 +26,6 @@ try {
 }
 var_dump($result);
 }
-//データ削除
-$del_no = $_POST['del_no'];
-if($_POST['delete'] ){//削除ナンバーの入力を確認したら
-  $sql ="delete from post where id = ".$del_no."";
-  //データベースの項目が$del_noと一致すると削除
-  echo "$sql";
-  $delete = mysql_query("delete from post where id = '49'");
-  var_dump($delete);
-  
- // $select=mysql_query('SELECT name FROM post where id=49');
-  //$row =mysql_fetch_assoc($select);
-  //echo $row['name'];
-}
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN"
 "http://www.w3.org/TR/html4/frameset.dtd">
@@ -82,14 +69,26 @@ if($_POST['delete'] ){//削除ナンバーの入力を確認したら
     <p><input type="reset" value="Reset" class=button ></p>
    </div> 
     
-    <div id="main"> Contribution</div>
-   削除No:<input type="text" name="del_no" size="5" > 削除したい投稿の番号を入力してください
+    <div id="main"> Contribution1</div>
+   削除No:<input type="text" name="delete_id" size="5" > 削除したい投稿の番号を入力してください
   <p><input type="submit" name="delete" value="delete" class=button ></p>
     
 <?php
 //DBよりデータ取得
 $query = 'SELECT * FROM post ORDER BY posted_at DESC';
  foreach ($pdo->query($query) as $row):
+?>
+<?php  
+ //データ削除
+$delete_id = $_POST['delete_id'];
+echo $delete_id;
+
+if(!empty ($_POST['delete'])){//deleteボタンが押されたら
+  $sql ="delete from post where (id =:id)";　//$del_noと一致する項目を削除
+$stmt = $pdo->prepare($sql);
+  $stmt->bindParam(":id", $delete_id);
+  $stmt->execute();
+}
 ?>
 
 <br>
