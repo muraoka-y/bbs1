@@ -24,7 +24,6 @@ try {
 } catch (Exception $e) {
     throw $e;
 }
-var_dump($result);
 }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN"
@@ -69,7 +68,7 @@ var_dump($result);
     <p><input type="reset" value="Reset" class=button ></p>
    </div> 
     
-    <div id="main"> Contribution1</div>
+    <div id="main"> Contribution</div>
    削除No:<input type="text" name="delete_id" size="5" > 削除したい投稿の番号を入力してください
   <p><input type="submit" name="delete" value="delete" class=button ></p>
     
@@ -80,15 +79,14 @@ $query = 'SELECT * FROM post ORDER BY posted_at DESC';
 ?>
 <?php  
  //データ削除
-$delete_id = $_POST['delete_id'];
-echo $delete_id;
+  $delete_id = $_POST['delete_id'];
 
-if(!empty ($_POST['delete'])){//deleteボタンが押されたら
-  $sql ="delete from post where (id =:id)";　//$del_noと一致する項目を削除
-$stmt = $pdo->prepare($sql);
-  $stmt->bindParam(":id", $delete_id);
-  $stmt->execute();
-}
+  if(!empty ($_POST['delete']))
+  { //deleteボタンが押されたら
+    $sql = "delete from post where (id = :id)"; //$del_idと一致する項目を削除
+    $stmt1 = $pdo->prepare($sql);
+    $stmt1->execute(array('id' => $delete_id));
+  }
 ?>
 
 <br>
