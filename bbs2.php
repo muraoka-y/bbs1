@@ -7,30 +7,32 @@ try {
 } catch (Exception $e) {
     throw $e;
 }
-if(!empty($_POST[Post])){
-//新規データがからでなければデータ追加
-$query ='insert into post (name,address,title,body,posted_at)values (?, ?, ?, ?, ?)';
 
-$stmt =$pdo->prepare($query);
+if ( ! empty($_POST[Post]) ) {
+    //新規データがからでなければデータ追加
+    $query ='INSERT INTO post (name, address, title, body, posted_at) VALUES (?, ?, ?, ?, ?)';
 
-try {
-    $result =$stmt->execute(array(
-        $_POST['name'],
-        $_POST['address'],
-        $_POST['title'],
-        $_POST['body'],
-        date('Y-m-d H:i:s', time()),
-        ));
-} catch (Exception $e) {
-    throw $e;
+    $stmt = $pdo->prepare($query);
+
+    try {
+        $result = $stmt->execute(array(
+                $_POST['name'],
+                $_POST['address'],
+                $_POST['title'],
+                $_POST['body'],
+                date('Y-m-d H:i:s', time()),
+            ));
+    } catch (Exception $e) {
+        throw $e;
+    }
 }
-}
+
 //データ削除
 $del_no = $_POST['del_no'];
-if($_POST['delete'] ){//削除ナンバーの入力を確認したら
-  $sql ="delete from post where id = ".$del_no."";
+if ( $_POST['delete'] ) { //削除ナンバーの入力を確認したら
+  $sql = "DELETE FROM post WHERE id = ".$del_no."";
   //データベースの項目が$del_noと一致すると削除
-  $delete = mysql_query("delete from post where id = '49'");
+  $delete = mysql_query("DELETE FROM post WHERE id = '49'");
   
  // $select=mysql_query('SELECT name FROM post where id=49');
   //$row =mysql_fetch_assoc($select);
@@ -86,7 +88,7 @@ if($_POST['delete'] ){//削除ナンバーの入力を確認したら
 <?php
 //DBよりデータ取得
 $query = 'SELECT * FROM post ORDER BY posted_at DESC';
- foreach ($pdo->query($query) as $row):
+foreach ($pdo->query($query) as $row):
 ?>
 <?php  
  //データ削除
@@ -101,10 +103,10 @@ $query = 'SELECT * FROM post ORDER BY posted_at DESC';
 ?>
 
 <br>
-[<?=$row['id']?>] <?=$row['title']?> <?=$row['name']?>
-<?=$row['posted_at']?>
+[<?= $row['id'] ?>] <?= $row['title'] ?> <?= $row['name'] ?>
+<?= $row['posted_at'] ?>
 <br>
-<?=$row['body']?>
+<?= $row['body'] ?>
 <?php endforeach; ?>
 <br>
 
